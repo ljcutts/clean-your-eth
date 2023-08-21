@@ -1,7 +1,6 @@
 import {useEffect} from "react"
 import { IState as Props } from "../page";
 import { HiLockOpen, HiLockClosed } from "react-icons/hi";
-import "./modal.css"
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -62,15 +61,15 @@ const EthToXMR: React.FC<IProps> = ({amountToSend, handleChange, xmrReceived, se
 
     return (
       <main className="">
-        <div className="bg-white flex flex-col justify-center p-5 w-[50rem] h-[20rem] rounded-lg">
+        <div className="bg-container flex flex-col justify-center p-5 w-[50rem] h-[20rem] rounded-lg">
           <div className="flex mx-auto mb-3">
-            <div className="flex rounded-md p-4 w-[30rem] h-[5rem] bg-input justify-center items-center">
+            <div className="flex rounded-md border-black border-solid font-semibold p-4 w-[30rem] h-[5rem] text-white bg-insideContainer justify-center items-center">
               <h1 className="mr-3">How Much To Send</h1>
               <input
                 ref={amountRef}
                 value={amountToSend}
                 onChange={handleChange}
-                className={`rounded-md text-right pr-3 outline-none ${amountInput && "outline-red-600"}`}
+                className={`rounded-md text-black text-right pr-3 outline-none ${amountInput && "outline-red-600"}`}
                 type="number"
               />
             </div>
@@ -80,17 +79,17 @@ const EthToXMR: React.FC<IProps> = ({amountToSend, handleChange, xmrReceived, se
           </div>
           <div
             onClick={() => setRate(!rate)}
-            className="flex items-center mx-auto cursor-pointer"
+            className="flex items-center mx-auto lock"
           >
             {!rate ? <HiLockOpen size={40} /> : <HiLockClosed size={40} />}
             {!rate ? (
-              <span className="ml-1">Floating Rate</span>
+              <span className="text-white ml-1">Floating Rate</span>
             ) : (
-              <span className="ml-1">Fixed Rate</span>
+              <span className="text-white ml-1">Fixed Rate</span>
             )}
           </div>
           <div className="flex mx-auto mt-3">
-            <div className="flex rounded-md p-4 w-[30rem] h-[5rem] bg-input justify-center items-center">
+            <div className="flex text-white font-semibold rounded-md p-4 w-[30rem] h-[5rem] bg-insideContainer justify-center items-center">
               <h1 className="mr-3">How Much To Receive</h1>
               {loading ? (
                 <div className="flex items-center flex-row-reverse bg-white rounded-md h-[60%] w-[43%]">
@@ -102,7 +101,7 @@ const EthToXMR: React.FC<IProps> = ({amountToSend, handleChange, xmrReceived, se
                   </div>
                 </div>
               ) : (
-                <div className="flex pr-2 items-center flex-row-reverse bg-white rounded-md h-[50%] w-[43%]">
+                <div className="flex pr-2 items-center text-black flex-row-reverse bg-white rounded-md h-[50%] w-[43%]">
                   {xmrReceived}
                 </div>
               )}
@@ -113,7 +112,7 @@ const EthToXMR: React.FC<IProps> = ({amountToSend, handleChange, xmrReceived, se
           </div>
           <button
             onClick={handleSubmit}
-            className="mx-auto rounded-md p-3 bg-blue-300 w-[10rem] relative top-3"
+            className="mx-auto rounded-md hover:text-black hover:bg-white hover:ease-in hover:duration-500 p-3 bg-crypto font-bold text-white w-[10rem] relative top-3"
           >
             Exchange
           </button>

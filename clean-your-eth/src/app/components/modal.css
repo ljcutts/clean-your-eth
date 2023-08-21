@@ -65,3 +65,31 @@
     transform: rotate(360deg);
   }
 }
+
+.lock svg {
+   cursor: pointer;
+}
+
+.lock svg:hover {
+  animation: lock 1.5s cubic-bezier(0.5, 0, 0.5, 1);
+}
+
+@keyframes lock {
+   0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-45deg);
+    scale:1.25
+  }
+  50% {
+    transform: rotate(45deg);
+    scale:1.25;
+  }
+  75% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}

@@ -10,7 +10,11 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {ABI, ADDRESS} from "../app/contractInfo/swapfee"
 import { parseEther } from 'viem';
+import "../app/components/modal.css"
 //show react-toastify for clicking on clipboard
+//add how it works page
+//work on responsiveness
+//change border color
 
 export type IState = {
   amountToSend: string;
@@ -285,60 +289,63 @@ export default function Home() {
   })
 
   return (
-      <>
-      <Navbar/>
-        <main className="flex flex-col justify-center items-center h-screen">
-          <div>cleanyoureth</div>
-          <div className="flex flex-col justify-center items-center bg-white w-[30rem] h-[10rem] mt-2 rounded-lg mb-3">
-            <h1 className="mb-2">Your Connected ETH Address Will Be Used For Transfers</h1>
-            <h1 className="mb-2">
-              Paste Your Monero Address To Receive/Send Monero
-            </h1>
-            <input
-              value={xmrAddress}
-              ref={xmrRef}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setXmrAddress(e.target.value)
-              }
-              className={`bg-input text-center pr-3 rounded-md ${xmrInput && "outline-red-600"}`}
-              type="text"
-            />
-          </div>
-          <EthToXMR
-            amountToSend={amountToSend}
-            handleChange={handleChange}
-            setXmrReceived={setXmrReceived}
-            xmrReceived={xmrReceived}
-            handleSubmit={handleSubmit}
-            rate={rate}
-            setRate={setRate}
-            loading={loading}
-            setLoading={setLoading}
-            amountRef={amountRef}
-            amountInput={amountInput}
-            setAmountInput={setAmountInput}
+    <>
+      <Navbar />
+      <main className="flex flex-col justify-center items-center h-screen">
+        <div className="flex flex-col justify-center items-center bg-container text-white w-[30rem] h-[10rem] mt-2 rounded-lg mb-3">
+          <h1 className="mb-2 italic">
+            Your Connected ETH Address Will Be Used For Transfers
+          </h1>
+          <h1 className="mb-2 font-semibold">
+            Paste Your Monero Address To Receive/Send Monero
+          </h1>
+          <input
+            value={xmrAddress}
+            ref={xmrRef}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setXmrAddress(e.target.value)
+            }
+            className={`bg-input text-black font-semibold text-center pr-3 rounded-md ${
+              xmrInput && "outline-red-600"
+            }`}
+            type="text"
           />
-          {submitted && !transactionsCompleted && (
-            <Modal
-              ethToXmrExhangeID={ethToXmrExhangeID}
-              amountToSend={amountToSend}
-              ethReceiveAddress={ethReceiveAddress}
-              ethAddress={ethAddress}
-              ethToXmrStatus={ethToXmrStatus}
-              xmrReceived={xmrReceived}
-              xmrToEthExchangeID={xmrToEthExchangeID}
-              ethReceived={ethReceived}
-              xmrReceiveAddress={xmrReceiveAddress}
-              xmrAddress={xmrAddress}
-              xmrToEthStatus={xmrToEthStatus}
-              cancelModal={cancelModal}
-              rate={rate}
-            />
-          )}
-          {!completeModal && transactionsCompleted && (
-            <CompleteModal cancelModal={cancelModal} />
-          )}
-        </main>
-      </>
+        </div>
+        <EthToXMR
+          amountToSend={amountToSend}
+          handleChange={handleChange}
+          setXmrReceived={setXmrReceived}
+          xmrReceived={xmrReceived}
+          handleSubmit={handleSubmit}
+          rate={rate}
+          setRate={setRate}
+          loading={loading}
+          setLoading={setLoading}
+          amountRef={amountRef}
+          amountInput={amountInput}
+          setAmountInput={setAmountInput}
+        />
+        {submitted && !transactionsCompleted && (
+          <Modal
+            ethToXmrExhangeID={ethToXmrExhangeID}
+            amountToSend={amountToSend}
+            ethReceiveAddress={ethReceiveAddress}
+            ethAddress={ethAddress}
+            ethToXmrStatus={ethToXmrStatus}
+            xmrReceived={xmrReceived}
+            xmrToEthExchangeID={xmrToEthExchangeID}
+            ethReceived={ethReceived}
+            xmrReceiveAddress={xmrReceiveAddress}
+            xmrAddress={xmrAddress}
+            xmrToEthStatus={xmrToEthStatus}
+            cancelModal={cancelModal}
+            rate={rate}
+          />
+        )}
+        {!completeModal && transactionsCompleted && (
+          <CompleteModal cancelModal={cancelModal} />
+        )}
+      </main>
+    </>
   );
 }
