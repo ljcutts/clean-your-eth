@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {ABI, ADDRESS} from "../app/contractInfo/swapfee"
 import { parseEther } from 'viem';
+//show react-toastify for clicking on clipboard
 
 export type IState = {
   amountToSend: string;
