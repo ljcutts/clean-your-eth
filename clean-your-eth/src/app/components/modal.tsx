@@ -38,8 +38,8 @@ const Modal: React.FC<IProps> = ({
 }): JSX.Element => {
   return (
     <>
-      <div className="modal text-white md:break-all grid fixed place-items-center z-50 w-[100%] h-[100%] top-0 bottom-[15rem] left-0">
-        <div className="bg-container flex flex-col justify-between p-5 w-[65%] h-auto rounded-[8px]">
+      <div className="modal overflow-y-scroll text-white md:break-all grid fixed place-items-center z-50 w-[100%] h-[100%] top-0 bottom-[15rem] left-0">
+        <div className="bg-container flex flex-col justify-between p-5 w-[55%] h-auto rounded-[8px]">
           <h1 className="text-center mb-2">
             <span className="text-sm md:text-base font-bold">Exchange ID:</span>{" "}
             {ethToXmrExhangeID}
@@ -123,23 +123,26 @@ const Modal: React.FC<IProps> = ({
             </div>
           )}
         </div>
-        {ethToXmrStatus === "finished" && <BsArrowDownCircle />}
+        {ethToXmrStatus === "finished" && <div className="my-4"><BsArrowDownCircle /></div>}
         {ethToXmrStatus === "finished" && (
-          <div className="bg-container p-5 w-[65%] h-auto rounded-[8px]">
+          <div className="bg-container flex flex-col justify-between p-5 w-[65%] h-auto rounded-[8px]">
             <h1 className="mb-5 text-center">
               <span className="text-sm md:text-base font-bold">
                 Exchange ID:
               </span>
               {xmrToEthExchangeID}
             </h1>
-            <div className="flex items-center">
-              <span className="mx-4 font-bold">Amount Of Monero To Send:</span>
-              <img className="mr-3" src="./monero.png" alt="" width={40} />
-              <span>{xmrReceived} XMR</span>
+            <div className="flex flex-col md:flex-row items-center relative md:right-3">
+              <span className="mx-4 font-bold mb-2">
+                Amount Of Monero To Send:
+              </span>
+              <img className="mr-3 mb-2" src="./monero.png" alt="" width={40} />
+              <span className="mb-2">{xmrReceived} XMR</span>
             </div>
-            <div className="flex items-center">
-              <h1 className="ml-4 mr-3 mb-2 font-bold">
-                Deposit Address: {xmrReceiveAddress}
+            <div className="flex flex-col md:flex-row items-center mb-2">
+              <span className="font-bold mr-2 mb-1">Deposit Address:</span>{" "}
+              <h1 className="ml-4 mr-3 mb-2 break-all">
+                {xmrReceiveAddress}
               </h1>
               <div
                 onClick={() => {
@@ -162,18 +165,25 @@ const Modal: React.FC<IProps> = ({
                 <FaRegCopy size={25} />
               </div>
             </div>
-            <div className="flex mb-1 items-center">
-              <span className="mx-4 mb-2 font-bold">
+            <div className="flex flex-col md:flex-row mb-1 items-center relative md:right-2">
+              <span className="mx-4 mb-2 font-bold md:ml-2">
                 You Should Get: {rate ? "" : <span>≈</span>}
               </span>
-              <img className="mr-3" src="./eth.png" alt="" width={20} />
-              <span>{ethReceived} ETH</span>
+              <img
+                className="mr-3 mb-2 md:mb-0"
+                src="./eth.png"
+                alt=""
+                width={20}
+              />
+              <span className="mb-1">{ethReceived} ETH</span>
             </div>
-            <h1 className="break-normal ml-4 mb-4">
-              <span className="font-bold">Refund Address:</span>{" "}
-              {xmrAddress.slice(0, 15)}...
-              {xmrAddress.slice(-4)}
-            </h1>
+            <div className="flex flex-col md:flex-row items-center mb-2 relative md:right-4">
+              <h1 className="break-normal ml-4 mb-4">
+                <span className="font-bold">Refund Address:</span>{" "}
+                {xmrAddress.slice(0, 15)}...
+                {xmrAddress.slice(-4)}
+              </h1>
+            </div>
             <h1 className="mb-5 font-bold text-center">
               Swap Status:{" "}
               <span className="capitalize font-normal">{xmrToEthStatus}</span>
