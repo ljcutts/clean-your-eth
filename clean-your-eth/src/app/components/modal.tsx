@@ -1,4 +1,3 @@
-import "./modal.css"
 import { IState as Props } from "../page";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { BsArrowDownCircle } from "react-icons/bs";
@@ -39,50 +38,62 @@ const Modal: React.FC<IProps> = ({
 }): JSX.Element => {
   return (
     <>
-      <div className="modal text-white break-all grid fixed place-items-center z-50 w-[100%] h-[100%] top-0 bottom-[15rem] left-0">
+      <div className="modal text-white md:break-all grid fixed place-items-center z-50 w-[100%] h-[100%] top-0 bottom-[15rem] left-0">
         <div className="bg-container flex flex-col justify-between p-5 w-[65%] h-auto rounded-[8px]">
           <h1 className="text-center mb-2">
-            <span className="font-bold">Exchange ID:</span> {ethToXmrExhangeID}
+            <span className="text-sm md:text-base font-bold">Exchange ID:</span>{" "}
+            {ethToXmrExhangeID}
           </h1>
-          <div className="flex mb-2 items-center">
-            <span className="mx-4 font-bold">Amount Of ETH To Send:</span>
-            <img className="mr-3" src="./eth.png" alt="" width={20} />
+          <div className="flex flex-col md:flex-row  mb-2 items-center relative md:right-4">
+            <span className="mx-4 font-bold mb-2 md:mb-0">
+              Amount Of ETH To Send:
+            </span>
+            <img
+              className="md:mr-3 mb-2 md:mb-0"
+              src="./eth.png"
+              alt=""
+              width={20}
+            />
             <span>{amountToSend} ETH</span>
           </div>
-          <div className="flex mb-2 items-center">
-            <h1 className="ml-4 mr-3 mb-2">
-              <span className="font-bold mr-2">Deposit Address:</span>{" "}
+          <div className="flex flex-col md:flex-row mb-2 items-center">
+            <span className="font-bold mr-2">Deposit Address:</span>{" "}
+            <h1 className="ml-4 mr-3 break-all md:break-normal mb-2 md:mb-0">
               {ethReceiveAddress}
             </h1>
             <div
               onClick={() => {
-                navigator.clipboard.writeText(ethReceiveAddress)
-                toast.success(`Deposit Address Successfully Copied To Clipboard`, {
-                  position: "bottom-center",
-                  autoClose: 1000,
-                  hideProgressBar: true,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                });
+                navigator.clipboard.writeText(ethReceiveAddress);
+                toast.success(
+                  `ETH Deposit Address Successfully Copied To Clipboard`,
+                  {
+                    position: "bottom-center",
+                    autoClose: 1000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                  }
+                );
               }}
-              className="cursor-pointer relative bottom-[5px] hover:opacity-50"
+              className="cursor-pointer mb-2 md:mb-0 relative bottom-[5px] hover:opacity-50"
             >
               <FaRegCopy size={25} />
             </div>
           </div>
-          <div className="flex items-center mb-2">
+          <div className="flex flex-col md:flex-row items-center mb-2 relative md:right-6">
             <span className="mx-4 mb-1">
-              <span className="font-bold">You Should Get:</span>{" "}
+              <span className="font-bold md:ml-2">You Should Get:</span>{" "}
               {rate ? "" : <span>≈</span>}
             </span>
             <img className="mr-3" src="./monero.png" alt="" width={40} />
             <span>{xmrReceived} XMR</span>
           </div>
-          <h1 className="ml-4 mb-4">
-            <span className="font-bold mr-2">Refund Address:</span> {ethAddress}
-          </h1>
+          <div className="flex mb-2 flex-col items-center md:flex-row">
+            <span className="font-bold mr-2">Refund Address:</span>
+            <h1 className="md:ml-4 mb-4 md:mb-0 break-all">{ethAddress}</h1>
+          </div>
           <h1 className="mb-5 font-bold text-center">
             Swap Status:{" "}
             <span className="capitalize font-normal">{ethToXmrStatus}</span>
@@ -114,29 +125,46 @@ const Modal: React.FC<IProps> = ({
         </div>
         {ethToXmrStatus === "finished" && <BsArrowDownCircle />}
         {ethToXmrStatus === "finished" && (
-          <div className="bg-white p-5 w-[65%] h-auto rounded-[8px]">
+          <div className="bg-container p-5 w-[65%] h-auto rounded-[8px]">
             <h1 className="mb-5 text-center">
-              Exchange ID: {xmrToEthExchangeID}
+              <span className="text-sm md:text-base font-bold">
+                Exchange ID:
+              </span>
+              {xmrToEthExchangeID}
             </h1>
             <div className="flex items-center">
-              <span className="mx-4">Amount Of Monero To Send:</span>
+              <span className="mx-4 font-bold">Amount Of Monero To Send:</span>
               <img className="mr-3" src="./monero.png" alt="" width={40} />
               <span>{xmrReceived} XMR</span>
             </div>
             <div className="flex items-center">
-              <h1 className="ml-4 mr-3 mb-2">
+              <h1 className="ml-4 mr-3 mb-2 font-bold">
                 Deposit Address: {xmrReceiveAddress}
               </h1>
               <div
-                onClick={() => navigator.clipboard.writeText(xmrReceiveAddress)}
+                onClick={() => {
+                  navigator.clipboard.writeText(xmrReceiveAddress);
+                  toast.success(
+                    `XMR Deposit Address Successfully Copied To Clipboard`,
+                    {
+                      position: "bottom-center",
+                      autoClose: 1000,
+                      hideProgressBar: true,
+                      closeOnClick: true,
+                      pauseOnHover: true,
+                      draggable: true,
+                      progress: undefined,
+                    }
+                  );
+                }}
                 className="cursor-pointer relative bottom-[5px] hover:opacity-50"
               >
                 <FaRegCopy size={25} />
               </div>
             </div>
             <div className="flex mb-1 items-center">
-              <span className="mx-4 mb-2">
-                You Should Get: {rate ? <span>=</span> : <span>≈</span>}
+              <span className="mx-4 mb-2 font-bold">
+                You Should Get: {rate ? "" : <span>≈</span>}
               </span>
               <img className="mr-3" src="./eth.png" alt="" width={20} />
               <span>{ethReceived} ETH</span>
@@ -146,8 +174,9 @@ const Modal: React.FC<IProps> = ({
               {xmrAddress.slice(0, 15)}...
               {xmrAddress.slice(-4)}
             </h1>
-            <h1 className="mb-5 text-center">
-              Swap Status: <span className="capitalize">{xmrToEthStatus}</span>
+            <h1 className="mb-5 font-bold text-center">
+              Swap Status:{" "}
+              <span className="capitalize font-normal">{xmrToEthStatus}</span>
             </h1>
             {xmrToEthStatus === "finished" ? (
               <div className="flex justify-center items-center">

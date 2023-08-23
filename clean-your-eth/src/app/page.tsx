@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import {ABI, ADDRESS} from "../app/contractInfo/swapfee"
 import { parseEther } from 'viem';
 import "../app/components/modal.css"
-//show react-toastify for clicking on clipboard
+
 //add how it works page
 //work on responsiveness
 
@@ -242,30 +242,30 @@ export default function Home() {
       } else {
         setAmountInput(false)
       }
-      // if(xmrReceived !== "" && xmrReceived !== undefined && amountToSend !== "" && amountToSend !== undefined) {
-      //     try {
-      //       const { hash } = await writeContract({
-      //         account: address,
-      //         address: ADDRESS,
-      //         abi: ABI,
-      //         functionName: "payFee",
-      //         value: parseEther(amountToSend),
-      //       });
-      //       await waitForTransaction({ hash });
-      //     } catch (error) {
-      //       console.log(error);
-      //       toast.error(`${error}`, {
-      //         position: "top-left",
-      //         autoClose: 4000,
-      //         hideProgressBar: false,
-      //         closeOnClick: true,
-      //         pauseOnHover: true,
-      //         draggable: true,
-      //         progress: undefined,
-      //       });
-      //       return;
-      //     }
-      // }
+      if(xmrReceived !== "" && xmrReceived !== undefined && amountToSend !== "" && amountToSend !== undefined) {
+          try {
+            const { hash } = await writeContract({
+              account: address,
+              address: ADDRESS,
+              abi: ABI,
+              functionName: "payFee",
+              value: parseEther(amountToSend),
+            });
+            await waitForTransaction({ hash });
+          } catch (error) {
+            console.log(error);
+            toast.error(`${error}`, {
+              position: "top-left",
+              autoClose: 4000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+            return;
+          }
+      }
       await ethToXmrExchange()
    }
 
