@@ -14,7 +14,6 @@ import "../app/components/modal.css"
 //show react-toastify for clicking on clipboard
 //add how it works page
 //work on responsiveness
-//change border color
 
 export type IState = {
   amountToSend: string;
@@ -243,30 +242,30 @@ export default function Home() {
       } else {
         setAmountInput(false)
       }
-      if(xmrReceived !== "" && xmrReceived !== undefined && amountToSend !== "" && amountToSend !== undefined) {
-          try {
-            const { hash } = await writeContract({
-              account: address,
-              address: ADDRESS,
-              abi: ABI,
-              functionName: "payFee",
-              value: parseEther(amountToSend),
-            });
-            await waitForTransaction({ hash });
-          } catch (error) {
-            console.log(error);
-            toast.error(`${error}`, {
-              position: "top-left",
-              autoClose: 4000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-            });
-            return;
-          }
-      }
+      // if(xmrReceived !== "" && xmrReceived !== undefined && amountToSend !== "" && amountToSend !== undefined) {
+      //     try {
+      //       const { hash } = await writeContract({
+      //         account: address,
+      //         address: ADDRESS,
+      //         abi: ABI,
+      //         functionName: "payFee",
+      //         value: parseEther(amountToSend),
+      //       });
+      //       await waitForTransaction({ hash });
+      //     } catch (error) {
+      //       console.log(error);
+      //       toast.error(`${error}`, {
+      //         position: "top-left",
+      //         autoClose: 4000,
+      //         hideProgressBar: false,
+      //         closeOnClick: true,
+      //         pauseOnHover: true,
+      //         draggable: true,
+      //         progress: undefined,
+      //       });
+      //       return;
+      //     }
+      // }
       await ethToXmrExchange()
    }
 
@@ -292,11 +291,11 @@ export default function Home() {
     <>
       <Navbar />
       <main className="flex flex-col justify-center items-center h-screen">
-        <div className="flex flex-col justify-center items-center bg-container text-white w-[30rem] h-[10rem] mt-2 rounded-lg mb-3">
-          <h1 className="mb-2 italic">
+        <div className="flex flex-col w-[75%] justify-center items-center bg-container text-white md:w-[30rem] h-[10rem] mt-2 rounded-lg mb-3">
+          <h1 className="pl-2 pr-1 text-sm mb-2 italic">
             Your Connected ETH Address Will Be Used For Transfers
           </h1>
-          <h1 className="mb-2 font-semibold">
+          <h1 className="pl-2 text-sm mb-2 sm:mb-6 font-semibold">
             Paste Your Monero Address To Receive/Send Monero
           </h1>
           <input
@@ -305,7 +304,7 @@ export default function Home() {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setXmrAddress(e.target.value)
             }
-            className={`bg-input text-black font-semibold text-center pr-3 rounded-md ${
+            className={`bg-input text-black text-sm font-semibold outline-none px-3 rounded-md ${
               xmrInput && "outline-red-600"
             }`}
             type="text"

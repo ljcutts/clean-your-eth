@@ -93,3 +93,8 @@
     transform: rotate(0deg);
   }
 }
+
+.theBorder {
+  border-style: solid;
+  border-color: black;
+}

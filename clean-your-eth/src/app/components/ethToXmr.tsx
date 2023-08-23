@@ -60,20 +60,22 @@ const EthToXMR: React.FC<IProps> = ({amountToSend, handleChange, xmrReceived, se
     }, [amountToSend, rate]);
 
     return (
-      <main className="">
-        <div className="bg-container flex flex-col justify-center p-5 w-[50rem] h-[20rem] rounded-lg">
+      <>
+        <div className="bg-container w-[75%] flex flex-col justify-center p-5 sm:w-[50rem] h-[20rem] rounded-lg">
           <div className="flex mx-auto mb-3">
-            <div className="flex rounded-md border-black border-solid font-semibold p-4 w-[30rem] h-[5rem] text-white bg-insideContainer justify-center items-center">
+            <div className="flex flex-col sm:flex-row w-auto rounded-md border-black border-solid sm:border-[5px] font-semibold p-4 sm:w-[30rem] h-[5rem] text-white bg-insideContainer mx-auto justify-center items-center">
               <h1 className="mr-3">How Much To Send</h1>
               <input
                 ref={amountRef}
                 value={amountToSend}
                 onChange={handleChange}
-                className={`rounded-md text-black text-right pr-3 outline-none ${amountInput && "outline-red-600"}`}
+                className={`rounded-md text-black text-right pr-3 outline-none ${
+                  amountInput && "outline-red-600"
+                }`}
                 type="number"
               />
             </div>
-            <div className="flex justify-center items-center ml-1 w-[7.5rem] rounded-r-lg bg-crypto h-[5rem]">
+            <div className="hidden sm:flex justify-center items-center ml-1 w-[7.5rem] rounded-r-lg bg-crypto h-[5rem]">
               <img src="./eth.png" alt="" width={40} height={40} />
             </div>
           </div>
@@ -89,10 +91,10 @@ const EthToXMR: React.FC<IProps> = ({amountToSend, handleChange, xmrReceived, se
             )}
           </div>
           <div className="flex mx-auto mt-3">
-            <div className="flex text-white font-semibold rounded-md p-4 w-[30rem] h-[5rem] bg-insideContainer justify-center items-center">
+            <div className="flex flex-col sm:flex-row w-auto text-white border-black border-solid sm:border-[5px] font-semibold rounded-md p-4 sm:w-[30rem] h-[5rem] bg-insideContainer justify-center items-center">
               <h1 className="mr-3">How Much To Receive</h1>
               {loading ? (
-                <div className="flex items-center flex-row-reverse bg-white rounded-md h-[60%] w-[43%]">
+                <div className="flex items-center flex-row-reverse bg-white rounded-md h-[60%] w-[198px] sm:w-[43%]">
                   <div className="lds-ring2 relative top-1">
                     <div></div>
                     <div></div>
@@ -101,12 +103,12 @@ const EthToXMR: React.FC<IProps> = ({amountToSend, handleChange, xmrReceived, se
                   </div>
                 </div>
               ) : (
-                <div className="flex pr-2 items-center text-black flex-row-reverse bg-white rounded-md h-[50%] w-[43%]">
+                <div className="flex pr-2 items-center text-black flex-row-reverse bg-white rounded-md h-[50%] w-[198px] sm:w-[43%]">
                   {xmrReceived}
                 </div>
               )}
             </div>
-            <div className="flex justify-center items-center ml-1 w-[7.5rem] rounded-r-lg bg-crypto h-[5rem]">
+            <div className="hidden sm:flex justify-center items-center ml-1 w-[7.5rem] rounded-r-lg bg-crypto h-[5rem]">
               <img src="./monero.png" alt="" width={50} height={50} />
             </div>
           </div>
@@ -117,7 +119,7 @@ const EthToXMR: React.FC<IProps> = ({amountToSend, handleChange, xmrReceived, se
             Exchange
           </button>
         </div>
-      </main>
+      </>
     );
 };
 
