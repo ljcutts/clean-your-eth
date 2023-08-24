@@ -132,7 +132,7 @@ const Modal: React.FC<IProps> = ({
               </span>
               {xmrToEthExchangeID}
             </h1>
-            <div className="flex flex-col md:flex-row items-center relative md:right-3">
+            <div className="flex flex-col md:flex-row items-center relative md:right-[14px]">
               <span className="mx-4 font-bold mb-2">
                 Amount Of Monero To Send:
               </span>

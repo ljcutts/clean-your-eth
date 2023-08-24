@@ -13,7 +13,6 @@ import { parseEther } from 'viem';
 import "../app/components/modal.css"
 
 //add how it works page
-//work on responsiveness
 
 export type IState = {
   amountToSend: string;
