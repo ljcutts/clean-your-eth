@@ -1,5 +1,5 @@
 import React from "react";
-import { PROJECT_ID } from "./projectId";
+//import { PROJECT_ID } from "./projectId";
 
 import {
   EthereumClient,
@@ -15,7 +15,7 @@ type WagmiProviderType = {
 };
 
 const chains = [mainnet];
-const projectId = PROJECT_ID;
+const projectId = "14e399fbc1208744ce64a182b4f66a8d";
 const { publicClient } = configureChains(chains, [w3mProvider({ projectId: projectId })]);
 const wagmiConfig = createConfig({
   autoConnect: true,
