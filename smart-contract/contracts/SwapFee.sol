@@ -17,16 +17,15 @@ contract SwapFee is Ownable {
    
    function payFee() external payable {
      address owner = payable(owner());
-     uint amountForOwner = (1 * msg.value)/100;
-     uint amountForSwapper = (99 * msg.value)/100;
+     uint amountForOwner = (fee * msg.value)/100;
+     uint swapperFeeTakenBack = 100 - fee;
+     uint amountForSwapper = (swapperFeeTakenBack * msg.value)/100;
      (bool success,  ) = payable(msg.sender).call{value: amountForSwapper}("");
      require(success, "Failed To Send Ether");
      (bool sent,  ) = owner.call{value: amountForOwner}("");
      require(sent, "Failed To Send Ether");
    }
    
-
    receive() external payable{}
    fallback() external payable{}
 }
-

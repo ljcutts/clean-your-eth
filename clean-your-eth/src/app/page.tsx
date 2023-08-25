@@ -1,11 +1,12 @@
 "use client"
-import { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import EthToXMR from './components/ethToXmr'
 import Modal from "./components/modal";
 import CompleteModal from './components/completeModal';
 import { useAccount, useBalance, } from "wagmi";
-import {  writeContract, waitForTransaction } from "@wagmi/core";
+import {  writeContract, waitForTransaction, readContract } from "@wagmi/core";
 import Navbar from "./components/navbar"
+import FeeModal from './components/feeModal';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {ABI, ADDRESS} from "../app/contractInfo/swapfee"
@@ -39,6 +40,8 @@ export type IState = {
   amountRef: React.RefObject<HTMLInputElement>;
   amountInput: boolean;
   setAmountInput: React.Dispatch<React.SetStateAction<boolean>>;
+  feeTransactionCompleted: boolean;
+  setFeeModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export default function Home() {  
@@ -67,6 +70,9 @@ export default function Home() {
    const [loading, setLoading] = useState<boolean>(false);
    const [xmrInput, setXmrInput] = useState<boolean>(false)
    const [amountInput, setAmountInput] = useState<boolean>(false)
+   const [fee, setFee] = useState<string>("0")
+   const [feeTransactionCompleted, setFeeTransactionCompleted] = useState<boolean>(false)
+   const [feeModal, setFeeModal] = useState<boolean>(false)
    
   const ethToXmrExchange = async() => {
     if(ethToXmrExhangeID === "") {
@@ -173,6 +179,15 @@ export default function Home() {
     }
   };
 
+  const getFee = async() => {
+   const fee = await readContract({
+     address: ADDRESS,
+     abi: ABI,
+     functionName: "fee"
+   })
+    setFee(String(fee))
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAmountToSend(e.target.value)
   };
@@ -185,10 +200,11 @@ export default function Home() {
      setXmrReceived("")
      setAmountToSend("")
      setSubmitted(false)
-     setCompleteModal(false)
+     setCompleteModal(true)
   }
 
    const handleSubmit = async() => {
+    setCompleteModal(false)
     setEthAddress(address as string)
     const ethBalance = data?.formatted as string
     const correctLength = (xmrAddress.length === (95 || 106))
@@ -243,6 +259,7 @@ export default function Home() {
       }
       if(xmrReceived !== "" && xmrReceived !== undefined && amountToSend !== "" && amountToSend !== undefined) {
           try {
+            setFeeModal(true)
             const { hash } = await writeContract({
               account: address,
               address: ADDRESS,
@@ -251,6 +268,7 @@ export default function Home() {
               value: parseEther(amountToSend),
             });
             await waitForTransaction({ hash });
+            setFeeTransactionCompleted(true)
           } catch (error) {
             console.log(error);
             toast.error(`${error}`, {
@@ -262,6 +280,7 @@ export default function Home() {
               draggable: true,
               progress: undefined,
             });
+            setFeeModal(false)
             return;
           }
       }
@@ -286,10 +305,15 @@ export default function Home() {
      }
   })
 
+  useEffect(() => {
+    getFee()
+  },[])
+
   return (
     <>
       <Navbar />
       <main className="flex flex-col justify-center items-center h-screen">
+        <h1 className="font-bold text-white">Swap Fee: {fee}%</h1>
         <div className="flex flex-col w-[75%] justify-center items-center bg-container text-white md:w-[30rem] h-[10rem] mt-2 rounded-lg mb-3">
           <h1 className="pl-2 pr-1 text-sm mb-2 italic">
             Your Connected ETH Address Will Be Used For Transfers
@@ -323,7 +347,7 @@ export default function Home() {
           amountInput={amountInput}
           setAmountInput={setAmountInput}
         />
-        {submitted && !transactionsCompleted && (
+        {submitted && !transactionsCompleted && feeTransactionCompleted && !feeModal && (
           <Modal
             ethToXmrExhangeID={ethToXmrExhangeID}
             amountToSend={amountToSend}
@@ -338,6 +362,12 @@ export default function Home() {
             xmrToEthStatus={xmrToEthStatus}
             cancelModal={cancelModal}
             rate={rate}
+          />
+        )}
+        {feeModal && (
+          <FeeModal
+            feeTransactionCompleted={feeTransactionCompleted}
+            setFeeModal={setFeeModal}
           />
         )}
         {!completeModal && transactionsCompleted && (

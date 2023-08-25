@@ -6,7 +6,7 @@ const config: HardhatUserConfig = {
   solidity: "0.8.19",
   networks: {
     mainnet: {
-      url: "https://rpc.ankr.com/mainnet",
+      url: process.env.RPC_URL,
       accounts: [process.env.PRIVATE_KEY as string],
     },
     sepolia: {

@@ -5,7 +5,6 @@ async function main() {
  await SwapFee.waitForDeployment()
 
  console.log("Swap Fee Deployed To", SwapFee.target)
-
 }
 
 // We recommend this pattern to be able to use async/await everywhere
